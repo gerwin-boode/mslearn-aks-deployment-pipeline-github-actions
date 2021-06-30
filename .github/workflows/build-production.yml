@@ -50,9 +50,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: What
-        run: echo "TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
       - name: Install Helm
         uses: Azure/setup-helm@v1
         with:
@@ -76,5 +73,5 @@ jobs:
             contoso-website \
             ./kubernetes/contoso-website \
             --set image.repository=${{ secrets.ACR_NAME }} \
-            --set dns.name=${{ secrets.DNS_NAME }}
-            --set image.tag=${{ env.TAG }}
+            --set dns.name=${{ secrets.DNS_NAME }} \
+            --set image.tag=${GITHUB_REF##*/}
